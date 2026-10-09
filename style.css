@@ -1,0 +1,718 @@
+/* ==========================================================
+   1. THEME: change colors here and the whole site follows
+   ========================================================== */
+:root {
+  color-scheme: dark;
+  --bg: #1c1a17; /* warm charcoal */
+  --surface: #26231f; /* cards and panels */
+  --line: #3a352e; /* borders and dividers */
+  --text: #ece6dc; /* main text */
+  --muted: #a39a8c; /* secondary text */
+  --accent: #f0a63a; /* amber */
+  --on-accent: #1c1a17; /* text that sits on top of amber */
+
+  --header-h: 64px;
+  --max-w: 1080px;
+  --gutter: clamp(20px, 5vw, 48px);
+  --font: "Satoshi", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f2eee6;
+  --surface: #fffdf8;
+  --line: #d9d1c3;
+  --text: #1f1b16;
+  --muted: #6b6256;
+  --accent: #9a5b00; /* darker amber so text stays readable on light */
+  --on-accent: #fffdf8;
+}
+
+/* ==========================================================
+   2. BASE
+   ========================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.1;
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ==========================================================
+   3. HEADER AND NAV
+   ========================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--line);
+  transition: background-color 0.25s ease;
+}
+
+.bar {
+  max-width: var(--max-w);
+  height: var(--header-h);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo {
+  font-weight: 900;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+
+.nav {
+  margin-left: auto;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  position: relative;
+  display: inline-block;
+  padding: 4px 0;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--text);
+}
+
+/* the underline that slides in under the active link */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+}
+
+/* show only the icon for the mode you would switch TO */
+[data-theme="dark"] .icon-moon,
+[data-theme="light"] .icon-sun {
+  display: none;
+}
+
+/* hamburger: hidden on desktop */
+.menu-btn {
+  display: none;
+}
+
+.menu-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  margin: 2px 0;
+  background-color: currentColor;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.menu-btn[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.menu-btn[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.menu-btn[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ==========================================================
+   4. BUTTONS
+   ========================================================== */
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 1.5px solid transparent;
+  transition: transform 0.2s ease, filter 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--on-accent);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.btn-ghost {
+  border-color: var(--muted);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  border-color: var(--text);
+}
+
+/* ==========================================================
+   5. HERO
+   ========================================================== */
+.hero {
+  max-width: var(--max-w);
+  min-height: calc(100vh - var(--header-h));
+  margin: 0 auto;
+  padding: 48px var(--gutter);
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+
+.typing {
+  margin: 0 0 20px;
+  min-height: 2.6em;
+  font-size: clamp(1.15rem, 2.6vw, 1.6rem);
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 3px;
+  vertical-align: -0.15em;
+  background-color: var(--accent);
+  animation: blink 1s steps(1) infinite;
+}
+
+.lede {
+  max-width: 52ch;
+  margin: 0 0 32px;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* the photo, with a flat amber block offset behind it */
+.portrait {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 14px 14px 0 var(--accent);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.portrait:hover {
+  transform: translate(6px, 6px);
+  box-shadow: 8px 8px 0 var(--accent);
+}
+
+.portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portrait-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  opacity: 0.45;
+}
+
+/* one page-load moment: hero pieces rise in, one after another */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-text > * {
+    animation: rise 0.7s ease backwards;
+  }
+  .hero-text > :nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .hero-text > :nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  .hero-text > :nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  .portrait {
+    animation: rise 0.8s ease 0.2s backwards;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================
+   6. SECTIONS (shared)
+   ========================================================== */
+.section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: clamp(64px, 10vw, 112px) var(--gutter);
+  border-top: 1px solid var(--line);
+}
+
+.section h2 {
+  margin-bottom: 40px;
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.subhead {
+  margin: 64px 0 20px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* scroll reveal: elements start hidden and fade up when script.js adds .in */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.js .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ==========================================================
+   7. ABOUT
+   ========================================================== */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.about-copy p {
+  max-width: 62ch;
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.about-copy .about-lead {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.facts {
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.facts div {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.facts dt {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 2px 0 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.skill {
+  height: 100%;
+  padding: 18px 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.skill:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+
+.skill-name {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.skill-level {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ==========================================================
+   8. PROJECTS
+   ========================================================== */
+.project {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  overflow: hidden;
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.project:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+.project-media {
+  position: relative;
+  min-height: 240px;
+  overflow: hidden;
+  background-color: var(--bg);
+}
+
+.project-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project:hover .project-media img {
+  transform: scale(1.05);
+}
+
+.project-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900;
+  color: var(--muted);
+  opacity: 0.45;
+}
+
+.project-body {
+  padding: clamp(24px, 4vw, 40px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.project-body h3 {
+  font-size: 1.9rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.project-body p {
+  margin: 10px 0 18px;
+  color: var(--muted);
+}
+
+.tags {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tags li {
+  padding: 3px 12px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.project-soon {
+  margin: 20px 0 0;
+  padding: 28px;
+  color: var(--muted);
+  border: 1.5px dashed var(--line);
+  border-radius: 12px;
+}
+
+/* ==========================================================
+   9. CONTACT AND FOOTER
+   ========================================================== */
+.contact-panel {
+  padding: clamp(24px, 5vw, 48px);
+  background-color: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.contact-panel p {
+  max-width: 46ch;
+  margin: 0 0 24px;
+  font-size: 1.3rem;
+  line-height: 1.45;
+}
+
+.site-footer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 28px var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ==========================================================
+   10. RESPONSIVE
+   ========================================================== */
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    min-height: 0;
+    padding-top: 40px;
+    padding-bottom: 72px;
+  }
+
+  .portrait {
+    width: min(100%, 300px);
+    margin-right: 14px; /* room for the offset block */
+  }
+
+  .about-layout,
+  .project {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .project {
+    gap: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .actions {
+    margin-left: auto;
+  }
+
+  .menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* the nav becomes a dropdown under the header */
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 0;
+    overflow: hidden;
+    visibility: hidden; /* keeps hidden links out of the tab order */
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--line);
+    transition: max-height 0.3s ease, visibility 0s linear 0.3s;
+  }
+
+  .nav.open {
+    max-height: 320px;
+    visibility: visible;
+    transition: max-height 0.3s ease, visibility 0s;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0;
+    padding: 8px var(--gutter) 16px;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 12px 0;
+    font-size: 1.05rem;
+  }
+
+  .nav-links a::after {
+    display: none;
+  }
+
+  .nav-links a.active {
+    color: var(--accent);
+  }
+}
+
+/* ==========================================================
+   11. REDUCED MOTION: respect people who turn animations off
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
